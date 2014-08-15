@@ -142,10 +142,10 @@ void cb_list_databases(duda_request_t *dr)
         response->end(dr, NULL);
     }
 
-    mariadb->query(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
-    mariadb->query(conn, "SHOW DATABASES", NULL, cb_ls_row_simple, cb_ls_end,
+    mariadb->query_async(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, "SHOW DATABASES", NULL, cb_ls_row_simple, cb_ls_end,
                    (void *) db_array);
-    mariadb->disconnect(conn, cb_on_disconnect);
+    mariadb->disconnect_async(conn, cb_on_disconnect);
 }
 
 void cb_list_tables(duda_request_t *dr)
@@ -165,11 +165,11 @@ void cb_list_tables(duda_request_t *dr)
         response->end(dr, NULL);
     }
 
-    mariadb->query(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
     sprintf(use_db_query, "USE %s", db);
-    mariadb->query(conn, use_db_query, NULL, NULL, NULL, NULL);
-    mariadb->query(conn, "SHOW TABLES", NULL, cb_ls_row_simple, cb_ls_end, (void *)tb_array);
-    mariadb->disconnect(conn, cb_on_disconnect);
+    mariadb->query_async(conn, use_db_query, NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, "SHOW TABLES", NULL, cb_ls_row_simple, cb_ls_end, (void *)tb_array);
+    mariadb->disconnect_async(conn, cb_on_disconnect);
 }
 
 void cb_row_nums(duda_request_t *dr)
@@ -191,12 +191,12 @@ void cb_row_nums(duda_request_t *dr)
         response->end(dr, NULL);
     }
 
-    mariadb->query(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
     sprintf(use_db_query, "USE %s", db);
-    mariadb->query(conn, use_db_query, NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, use_db_query, NULL, NULL, NULL, NULL);
     sprintf(count_query, "SELECT COUNT(*) FROM %s", table);
-    mariadb->query(conn, count_query, NULL, cb_ls_row_simple, cb_ls_end, (void *)row_nums);
-    mariadb->disconnect(conn, cb_on_disconnect);
+    mariadb->query_async(conn, count_query, NULL, cb_ls_row_simple, cb_ls_end, (void *)row_nums);
+    mariadb->disconnect_async(conn, cb_on_disconnect);
 }
 
 void cb_list_rows(duda_request_t *dr)
@@ -221,13 +221,13 @@ void cb_list_rows(duda_request_t *dr)
         response->end(dr, NULL);
     }
 
-    mariadb->query(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, "SET NAMES 'UTF8'", NULL, NULL, NULL, NULL);
     sprintf(use_db_query, "USE %s", db);
-    mariadb->query(conn, use_db_query, NULL, NULL, NULL, NULL);
+    mariadb->query_async(conn, use_db_query, NULL, NULL, NULL, NULL);
     sprintf(select_query, "SELECT * FROM %s LIMIT %ld, %d", table, (page - 1) * page_size,
             page_size);
-    mariadb->query(conn, select_query, cb_ls_result, cb_ls_row, cb_ls_end, (void *) row_root);
-    mariadb->disconnect(conn, cb_on_disconnect);
+    mariadb->query_async(conn, select_query, cb_ls_result, cb_ls_row, cb_ls_end, (void *) row_root);
+    mariadb->disconnect_async(conn, cb_on_disconnect);
 }
 
 void cb_home_page(duda_request_t* dr)

@@ -1,5 +1,5 @@
 CC      = gcc -g -Wall -DDEBUG
-INCDIR  = ../../src -I../../../../src/include/ -I../../
+INCDIR  = ../../src -I../../../../include/ -I../../
 OBJECTS = main.o
 
 all: ../mariadb_demo.duda
