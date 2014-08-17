@@ -135,7 +135,7 @@ void cb_list_databases(duda_request_t *dr)
     response->http_header_n(dr, "Content-Type: application/json", 30);
     response->wait(dr);
 
-    mariadb_conn_t *conn = mariadb->pool_get_conn(&demo_pool, dr, cb_on_connect);
+    mariadb_conn_t *conn = mariadb->pool_get_conn_async(&demo_pool, dr, cb_on_connect);
     if (!conn) {
         response->printf(dr, "No Connection Available\n");
         response->cont(dr);
@@ -158,7 +158,7 @@ void cb_list_tables(duda_request_t *dr)
     response->http_header_n(dr, "Content-Type: application/json", 30);
     response->wait(dr);
 
-    mariadb_conn_t *conn = mariadb->pool_get_conn(&demo_pool, dr, cb_on_connect);
+    mariadb_conn_t *conn = mariadb->pool_get_conn_async(&demo_pool, dr, cb_on_connect);
     if (!conn) {
         response->printf(dr, "No Connection Available\n");
         response->cont(dr);
@@ -184,7 +184,7 @@ void cb_row_nums(duda_request_t *dr)
     response->http_header_n(dr, "Content-Type: application/json", 30);
     response->wait(dr);
 
-    mariadb_conn_t *conn = mariadb->pool_get_conn(&demo_pool, dr, cb_on_connect);
+    mariadb_conn_t *conn = mariadb->pool_get_conn_async(&demo_pool, dr, cb_on_connect);
     if (!conn) {
         response->printf(dr, "No Connection Available\n");
         response->cont(dr);
@@ -214,7 +214,7 @@ void cb_list_rows(duda_request_t *dr)
     response->http_header_n(dr, "Content-Type: application/json", 30);
     response->wait(dr);
 
-    mariadb_conn_t *conn = mariadb->pool_get_conn(&demo_pool, dr, cb_on_connect);
+    mariadb_conn_t *conn = mariadb->pool_get_conn_async(&demo_pool, dr, cb_on_connect);
     if (!conn) {
         response->printf(dr, "No Connection Available\n");
         response->cont(dr);
